@@ -1,0 +1,7 @@
+<h1>items pedidos</h1>
+<ul>
+    @for(item of listPedido; track $index) {
+        <li>{{item.number}} {{item.name}} {{item.description}} </li>
+    }
+    {{listPedido.length}}
+</ul>
