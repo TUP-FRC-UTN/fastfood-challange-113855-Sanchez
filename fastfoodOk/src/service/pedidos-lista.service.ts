@@ -7,8 +7,7 @@ import { Estado, Pedidos } from '../data/Pedidos';
 })
 export class PedidosListaService {
   private listaPedidosSubject = new BehaviorSubject<Pedidos[]>([]);
-  listaPedidos$: Observable<Pedidos[]> =
-    this.listaPedidosSubject.asObservable();
+  listaPedidos$: Observable<Pedidos[]> = this.listaPedidosSubject.asObservable();
 
   constructor() {}
 
@@ -18,36 +17,26 @@ export class PedidosListaService {
   }
 
   removePedido(position: number) {
-    const updatedList = this.listaPedidosSubject
-      .getValue()
-      .filter((_, index) => index !== position);
+    const updatedList = this.listaPedidosSubject.getValue().filter((_, index) => index !== position);
     this.listaPedidosSubject.next(updatedList);
   }
 
   getListPedidos(): Pedidos[] {
-    const list = this.listaPedidosSubject
-      .getValue()
-      .filter((item) => item.estado === Estado.PEDIDO);
+    const list = this.listaPedidosSubject.getValue().filter((item) => item.estado === Estado.PEDIDO);
     console.log(list);
     return list;
   }
 
   getListPedidosEnMarcha(): Pedidos[] {
-    return this.listaPedidosSubject
-      .getValue()
-      .filter((item) => item.estado === Estado.EN_MARCHA);
+    return this.listaPedidosSubject.getValue().filter((item) => item.estado === Estado.EN_MARCHA);
   }
 
   getListPedidosFinalizados(): Pedidos[] {
-    return this.listaPedidosSubject
-      .getValue()
-      .filter((item) => item.estado === Estado.TERMINADO);
+    return this.listaPedidosSubject.getValue().filter((item) => item.estado === Estado.TERMINADO);
   }
 
   getListAllPedidos(): Pedidos[] {
-    return this.listaPedidosSubject
-      .getValue()
-      .filter((item) => item.estado === Estado.TERMINADO);
+    return this.listaPedidosSubject.getValue().filter((item) => item.estado === Estado.TERMINADO);
   }
 
   modificarEstadoPedido(estado: Estado, id: number) {

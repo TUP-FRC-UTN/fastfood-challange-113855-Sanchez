@@ -1,5 +1,5 @@
 import { PedidosListaService } from '../../service/pedidos-lista.service';
-import { Pedidos } from '../../data/Pedidos';
+import { Estado, Pedidos } from '../../data/Pedidos';
 import { Component, inject, OnInit } from '@angular/core';
 
 @Component({
@@ -12,11 +12,27 @@ import { Component, inject, OnInit } from '@angular/core';
 export class PedidosTableComponent implements OnInit {
   private servicePedidos = inject(PedidosListaService);
   listPedido: Pedidos[] = [];
-
+  itemCocinando: Pedidos | null = null;
   ngOnInit(): void {
     this.servicePedidos.listaPedidos$.subscribe((pedidos) => {
-      this.listPedido = pedidos;
+      this.listPedido = this.servicePedidos.getListPedidos();
       console.log('Updated list of pedidos:', this.listPedido);
     });
+  }
+  cocinar(arg0: number) {
+    if (!this.itemCocinando) {
+      this.itemCocinando =
+        this.listPedido.find((item) => item.number === arg0) || new Pedidos();
+      this.servicePedidos.modificarEstadoPedido(Estado.EN_MARCHA, arg0);
+    }
+  }
+  terminar() {
+    if (this.itemCocinando) {
+      this.servicePedidos.modificarEstadoPedido(
+        Estado.TERMINADO,
+        this.itemCocinando?.number
+      );
+      this.itemCocinando = null;
+    }
   }
 }

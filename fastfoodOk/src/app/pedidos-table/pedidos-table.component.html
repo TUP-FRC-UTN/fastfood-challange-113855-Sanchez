@@ -1,7 +1,15 @@
 <h1>items pedidos</h1>
 <ul>
-    @for(item of listPedido; track $index) {
-        <li>{{item.number}} {{item.name}} {{item.description}} </li>
-    }
-    {{listPedido.length}}
+  @for(item of listPedido; track $index) {
+  <li>
+    {{ item.number }} {{ item.name }} {{ item.description }}
+    <button (click)="cocinar(item.number)">Cocinar</button>
+  </li>
+  }
 </ul>
+
+<h1>cocina</h1>
+@if (itemCocinando) {
+<p>cocinando {{ itemCocinando.number }} {{ itemCocinando.description }}</p>
+<button (click)="terminar()">terminar</button>
+}
